@@ -136,7 +136,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden p-8 flex flex-col">
+      <div className="flex-1 overflow-hidden p-6 md:p-8 flex flex-col">
         {/* Coach Message */}
         <div className="gradient-bg frosted-backdrop rounded-lg p-5 text-gray-900 mb-2 flex-shrink-0">
           <div className="text-lg font-medium leading-relaxed">{getCoachMessage()}</div>
