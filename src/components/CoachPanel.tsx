@@ -112,7 +112,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
   const todayDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   return (
-    <div className="flex-1 flex flex-col bg-white overflow-hidden rounded-2xl">
+    <div className="flex-1 flex flex-col bg-white  rounded-2xl">
       <div className="p-6 border-b border-gray-100">
         <div className="flex justify-between items-start">
           <div>
@@ -151,8 +151,8 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
         </div>
 
         {/* Activities Grid */}
-        <div className="flex-1 overflow-hidden">
-          <div className="grid grid-cols-2 gap-4 h-full">
+        <div className="flex-1">
+          <div className="grid md:grid-cols-2 gap-4 h-full">
             {activityKeys.map((key) => {
               const activity = activities[key];
               const isEditMode = editMode[key] || false;

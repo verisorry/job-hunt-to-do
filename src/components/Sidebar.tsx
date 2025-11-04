@@ -44,7 +44,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const totalTime = incompleteTasks.reduce((sum, task) => sum + task.time, 0);
 
   return (
-    <div className="w-96 bg-white flex flex-col flex-shrink-0 rounded-2xl">
+    <div className="w-full md:w-96 bg-white flex flex-col flex-shrink-0 rounded-2xl">
       <div className="p-6 border-b border-gray-100">
         <div className="flex justify-between items-start">
           <div>

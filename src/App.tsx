@@ -69,7 +69,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50 p-4 gap-4">
+    <div className="h-screen flex flex-col bg-gray-50 p-4 gap-4 md:flex-row">
       <Sidebar
         tasks={data.tasks}
         onAddTask={handleAddTask}
