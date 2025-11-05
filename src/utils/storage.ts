@@ -1,11 +1,13 @@
 import { CoachData, Activities } from '../types';
+import { FaPaperPlane, FaGlobe, FaReact, FaToolbox } from "react-icons/fa6";
+
 
 const STORAGE_KEY = 'jobHuntCoach';
 
 export const getDefaultActivities = (): Activities => ({
   applications: {
     title: 'Applications',
-    emoji: '📝',
+    emoji: FaPaperPlane,
     suggestions: [
       { text: 'Apply to 2-3 companies', time: '30 min' },
       { text: 'Tailor resume for target role', time: '20 min' },
@@ -16,7 +18,7 @@ export const getDefaultActivities = (): Activities => ({
   },
   portfolio: {
     title: 'Portfolio',
-    emoji: '💼',
+    emoji: FaGlobe,
     suggestions: [
       { text: 'Add case study', time: '60 min' },
       { text: 'Update project descriptions', time: '30 min' },
@@ -27,7 +29,7 @@ export const getDefaultActivities = (): Activities => ({
   },
   projects: {
     title: 'Projects',
-    emoji: '🚀',
+    emoji: FaReact,
     suggestions: [
       { text: 'Code for 30 minutes on current project', time: '30 min' },
       { text: 'Deploy a new feature', time: '45 min' },
@@ -38,7 +40,7 @@ export const getDefaultActivities = (): Activities => ({
   },
   skills: {
     title: 'Skills',
-    emoji: '📚',
+    emoji: FaToolbox,
     suggestions: [
       { text: 'Do 2 LeetCode problems', time: '30 min' },
       { text: 'Practice system design', time: '45 min' },
@@ -63,16 +65,25 @@ export const loadCoachData = (): CoachData => {
     // Clear completed tasks daily
     const filteredTasks = tasks.filter(task => !task.completed || !task.oldDay);
 
+    // Migrate old emoji format (strings) to new format (IconType)
+    // If activities exist but have string emojis, replace with default activities
+    const activities = data.activities &&
+      typeof data.activities.applications?.emoji === 'function'
+      ? data.activities
+      : getDefaultActivities();
+
     return {
       ...data,
       tasks: filteredTasks,
-      activities: data.activities || getDefaultActivities(),
+      activities,
+      timeBlocks: data.timeBlocks || [],
     };
   }
 
   return {
     tasks: [],
     activities: getDefaultActivities(),
+    timeBlocks: [],
     lastActiveDate: new Date().toDateString(),
     weeklyActivityCount: 0,
   };

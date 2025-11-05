@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 export interface Task {
   id: string;
   text: string;
@@ -14,7 +15,7 @@ export interface Suggestion {
 
 export interface Activity {
   title: string;
-  emoji: string;
+  emoji: IconType;
   suggestions: Suggestion[];
 }
 
@@ -22,9 +23,18 @@ export interface Activities {
   [key: string]: Activity;
 }
 
+export interface TimeBlock {
+  id: string;
+  taskId: string;
+  taskText: string;
+  startHour: number;
+  endHour: number;
+}
+
 export interface CoachData {
   tasks: Task[];
   activities: Activities;
+  timeBlocks: TimeBlock[];
   lastActiveDate: string;
   weeklyActivityCount: number;
 }

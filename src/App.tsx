@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Task, Activities, CoachData } from './types';
+import { Task, Activities, CoachData, TimeBlock } from './types';
 import { Sidebar } from './components/Sidebar';
 import { CoachPanel } from './components/CoachPanel';
+import { CalendarPanel } from './components/CalendarPanel';
 import { loadCoachData, saveCoachData } from './utils/storage';
 import { parseTimeToMinutes } from './utils/time';
 
@@ -68,8 +69,27 @@ function App() {
     }));
   };
 
+  const handleAddTimeBlock = (timeBlock: Omit<TimeBlock, 'id'>) => {
+    const newTimeBlock: TimeBlock = {
+      ...timeBlock,
+      id: Date.now().toString(),
+    };
+
+    setData((prev) => ({
+      ...prev,
+      timeBlocks: [...prev.timeBlocks, newTimeBlock],
+    }));
+  };
+
+  const handleDeleteTimeBlock = (id: string) => {
+    setData((prev) => ({
+      ...prev,
+      timeBlocks: prev.timeBlocks.filter((block) => block.id !== id),
+    }));
+  };
+
   return (
-    <div className="h-screen flex flex-col bg-gray-50 p-4 gap-4 md:flex-row">
+    <div className="h-screen flex flex-col bg-gray-50 p-4 gap-4 lg:flex-row">
       <Sidebar
         tasks={data.tasks}
         onAddTask={handleAddTask}
@@ -82,6 +102,12 @@ function App() {
         tasks={data.tasks}
         onAddTaskFromSuggestion={handleAddTaskFromSuggestion}
         onUpdateActivities={handleUpdateActivities}
+      />
+      <CalendarPanel
+        tasks={data.tasks}
+        timeBlocks={data.timeBlocks}
+        onAddTimeBlock={handleAddTimeBlock}
+        onDeleteTimeBlock={handleDeleteTimeBlock}
       />
     </div>
   );

@@ -109,7 +109,6 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
   const activityKeys = Object.keys(activities);
 
   const completedTasksToday = tasks.filter(t => t.completed && !t.oldDay).length;
-  const todayDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   return (
     <div className="flex-1 flex flex-col bg-white  rounded-2xl">
@@ -117,7 +116,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
         <div className="flex justify-between items-start">
           <div>
             <h2 className="text-2xl font-semibold text-gray-900">Suggestions</h2>
-            <p className="text-sm text-gray-500 mt-1">{todayDate}</p>
+            <p className="text-sm text-gray-500 mt-1">Some ideas to get you started</p>
           </div>
           <div className="text-right">
             <div className="text-sm text-gray-500">Done today</div>
@@ -136,7 +135,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden p-6 md:p-8 flex flex-col">
+      <div className="flex-1 overflow-hidden p-6 lg:p-8 flex flex-col">
         {/* Coach Message */}
         <div className="gradient-bg frosted-backdrop rounded-lg p-5 text-gray-900 mb-2 flex-shrink-0">
           <div className="text-lg font-medium leading-relaxed">{getCoachMessage()}</div>
@@ -152,7 +151,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
 
         {/* Activities Grid */}
         <div className="flex-1">
-          <div className="grid md:grid-cols-2 gap-4 h-full">
+          <div className="grid lg:grid-cols-2 gap-4 h-full">
             {activityKeys.map((key) => {
               const activity = activities[key];
               const isEditMode = editMode[key] || false;
@@ -160,7 +159,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
               return (
                 <div key={key} className="flex flex-col">
                   <h3 className="text-xs font-semibold text-gray-700 mb-2 flex items-center gap-2 flex-shrink-0">
-                    <span className="text-lg">{activity.emoji}</span>
+                    <activity.emoji className="text-lg" color='gray' />
                     {activity.title}
                     {isEditMode && (
                       <button
