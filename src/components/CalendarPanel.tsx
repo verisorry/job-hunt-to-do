@@ -23,6 +23,19 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isAgendaExpanded, setIsAgendaExpanded] = useState(true);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  function handleWindowSizeChange() {
+      setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+      window.addEventListener('resize', handleWindowSizeChange);
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange);
+      }
+  }, []);
+
+  const isMobile = width <= 1024;
 
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
@@ -37,7 +50,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
-    }, 60000); // Update every minute
+    }, 30000); // Update every minute
 
     return () => clearInterval(interval);
   }, []);
@@ -111,9 +124,9 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   const todayDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   return (
-    <div className="relative flex-shrink-0">
+    <div>
       {/* Toggle button - visible when collapsed */}
-      {!isAgendaExpanded && (
+      {(!isAgendaExpanded && !isMobile) && (
         <button
           onClick={() => setIsAgendaExpanded(true)}
           className="absolute right-0 top-4 bg-white hover:bg-gray-50 text-gray-600 rounded-l-lg shadow-lg p-2 transition-colors z-10 border border-r-0 border-gray-200"
@@ -125,7 +138,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
 
       {/* Main panel with slide animation */}
       <div
-        className={`bg-white h-full flex flex-col overflow-y-auto rounded-2xl transition-all duration-300 ease-in-out ${
+        className={`bg-white h-full flex flex-col rounded-2xl transition-all duration-300 ease-in-out ${
           isAgendaExpanded ? 'w-full lg:w-96 opacity-100' : 'w-0 opacity-0 overflow-hidden'
         }`}
       >
@@ -134,13 +147,15 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
             <h2 className="text-2xl font-semibold text-gray-900">Agenda</h2>
             <p className="text-sm text-gray-500 mt-1">{todayDate}</p>
           </div>
-          <button
-            onClick={() => setIsAgendaExpanded(false)}
-            className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-colors"
-            aria-label="Collapse agenda"
-          >
-            <BsLayoutSidebarInsetReverse />
-          </button>
+          {!isMobile && 
+            <button
+              onClick={() => setIsAgendaExpanded(false)}
+              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-colors"
+              aria-label="Collapse agenda"
+            >
+              <BsLayoutSidebarInsetReverse />
+            </button>
+          }
         </div>
 
         {unscheduledTasks.length > 0 && (
@@ -170,7 +185,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto h-full">
+        <div className="flex-1 overflow-auto">
           <div className="relative">
             {hours.map(hour => {
               const blocks = getBlocksForHour(hour);
@@ -179,17 +194,17 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
               return (
                 <div
                   key={hour}
-                  className="border-b border-gray-100 relative"
+                  className="border-b border-gray-100 "
                   onMouseDown={() => handleMouseDown(hour)}
                   onMouseUp={() => handleMouseUp(hour)}
                   onMouseEnter={() => handleMouseEnter(hour)}
                 >
                   <div className="flex">
-                    <div className="w-20 flex-shrink-0 p-2 text-xs text-gray-500 font-medium border-r border-gray-100">
+                    <div className="w-20 flex-shrink-0 p-2 text-xs text-gray-500 font-medium border-r border-gray-100 text-right">
                       {formatHour(hour)}
                     </div>
                     <div
-                      className={`flex-1 min-h-[3rem] p-2 transition-colors ${
+                      className={`flex-1 min-h-[3rem] p-2 transition-colors last:rounded-b-2xl ${
                         inDragRange && selectedTask
                           ? 'bg-green-100'
                           : blocks.length > 0

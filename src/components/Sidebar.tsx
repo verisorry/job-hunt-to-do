@@ -88,16 +88,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       <div className="p-4 border-t border-gray-200">
-        <form onSubmit={handleSubmit} className="flex gap-2">
-          <div className="flex gap-1">
+        <form onSubmit={handleSubmit} className="flex gap-2 w-full">
+          <div className="flex-1 flex gap-1">
             <input
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="+ Add custom task"
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500 placeholder-gray-400"
+              className="w-full flex-3 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500 placeholder-gray-400"
             />
-            <div className="relative w-full">
+            <div className="relative flex-2">
               <input
                 type="number"
                 value={inputTime}

@@ -111,7 +111,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
   const completedTasksToday = tasks.filter(t => t.completed && !t.oldDay).length;
 
   return (
-    <div className="flex-1 flex flex-col bg-white  rounded-2xl">
+    <div className="flex-1 flex flex-col bg-white rounded-2xl">
       <div className="p-6 border-b border-gray-100">
         <div className="flex justify-between items-start">
           <div>

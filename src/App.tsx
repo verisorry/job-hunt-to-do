@@ -89,7 +89,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50 p-4 gap-4 lg:flex-row">
+    <div className="min-h-screen lg:h-screen flex flex-col bg-gray-100 p-4 gap-4 lg:flex-row">
       <Sidebar
         tasks={data.tasks}
         onAddTask={handleAddTask}
