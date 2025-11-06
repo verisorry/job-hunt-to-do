@@ -9,10 +9,10 @@ export const getDefaultActivities = (): Activities => ({
     title: 'Applications',
     emoji: FaPaperPlane,
     suggestions: [
-      { text: 'Apply to 2-3 companies', time: '30 min' },
+      { text: 'Apply to 3 companies', time: '30 min' },
       { text: 'Tailor resume for target role', time: '20 min' },
       { text: 'Follow up on applications from last week', time: '15 min' },
-      { text: 'Connect with recruiter on LinkedIn', time: '10 min' },
+      { text: 'Connect with potential targeted connections on LinkedIn', time: '10 min' },
       { text: 'Check Simplify for new postings', time: '15 min' },
     ],
   },
@@ -33,19 +33,18 @@ export const getDefaultActivities = (): Activities => ({
     suggestions: [
       { text: 'Code for 30 minutes on current project', time: '30 min' },
       { text: 'Deploy a new feature', time: '45 min' },
-      { text: 'Start a Chrome extension idea', time: '60 min' },
+      { text: 'Start a side project idea', time: '60 min' },
       { text: 'Add tests to existing project', time: '30 min' },
-      { text: 'Refactor messy code', time: '45 min' },
     ],
   },
   skills: {
     title: 'Skills',
     emoji: FaToolbox,
     suggestions: [
-      { text: 'Do 2 LeetCode problems', time: '30 min' },
-      { text: 'Practice system design', time: '45 min' },
-      { text: 'Learn new React pattern', time: '30 min' },
-      { text: 'Read documentation', time: '20 min' },
+      { text: 'Do 2 LeetCode Easy problems', time: '30 min' },
+      { text: 'Do 2 LeetCode Medium problems', time: '45 min' },
+      { text: 'Do 2 LeetCode Company-tagged problems', time: '45 min' },
+      { text: 'Read a chapter from a book', time: '60 min' },
     ],
   },
 });
