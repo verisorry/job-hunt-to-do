@@ -204,7 +204,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
                       {formatHour(hour)}
                     </div>
                     <div
-                      className={`flex-1 min-h-[3rem] p-2 transition-colors last:rounded-b-2xl ${
+                      className={`flex-1 min-h-[3rem] p-2 transition-colors ${
                         inDragRange && selectedTask
                           ? 'bg-green-100'
                           : blocks.length > 0
