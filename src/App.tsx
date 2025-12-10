@@ -92,6 +92,13 @@ function App() {
     }));
   };
 
+  const handleClearTimeBlocks = () => {
+    setData((prev) => ({
+      ...prev,
+      timeBlocks: [],
+    }));
+  };
+
   return (
     <div className="min-h-screen lg:h-screen flex flex-col bg-gray-100 p-4 gap-4 lg:flex-row">
       <Sidebar
@@ -112,6 +119,7 @@ function App() {
         timeBlocks={data.timeBlocks}
         onAddTimeBlock={handleAddTimeBlock}
         onDeleteTimeBlock={handleDeleteTimeBlock}
+        onClearTimeBlocks={handleClearTimeBlocks}
       />
     </div>
   );

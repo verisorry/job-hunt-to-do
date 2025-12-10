@@ -26,6 +26,7 @@ interface CalendarPanelProps {
   timeBlocks: TimeBlock[];
   onAddTimeBlock: (timeBlock: Omit<TimeBlock, 'id'>) => void;
   onDeleteTimeBlock: (id: string) => void;
+  onClearTimeBlocks: () => void;
 }
 
 export const CalendarPanel: React.FC<CalendarPanelProps> = ({
@@ -33,6 +34,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   timeBlocks,
   onAddTimeBlock,
   onDeleteTimeBlock,
+  onClearTimeBlocks,
 }) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [dragStart, setDragStart] = useState<number | null>(null);
@@ -179,15 +181,25 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
             <h2 className="text-2xl font-semibold text-gray-900">Agenda</h2>
             <p className="text-sm text-gray-500 mt-1">{todayDate}</p>
           </div>
-          {!isMobile && 
-            <button
-              onClick={() => setIsAgendaExpanded(false)}
-              className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-colors"
-              aria-label="Collapse agenda"
-            >
-              <BsLayoutSidebarInsetReverse />
-            </button>
-          }
+          <div className="flex items-center gap-2">
+            {timeBlocks.length > 0 && (
+              <button
+                onClick={onClearTimeBlocks}
+                className="text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 px-2 py-1 rounded transition-colors"
+              >
+                Reset
+              </button>
+            )}
+            {!isMobile &&
+              <button
+                onClick={() => setIsAgendaExpanded(false)}
+                className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg p-2 transition-colors"
+                aria-label="Collapse agenda"
+              >
+                <BsLayoutSidebarInsetReverse />
+              </button>
+            }
+          </div>
         </div>
 
         {unscheduledTasks.length > 0 && (
