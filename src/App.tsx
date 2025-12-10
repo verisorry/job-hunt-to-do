@@ -57,9 +57,9 @@ function App() {
     }));
   };
 
-  const handleAddTaskFromSuggestion = (text: string, time: string) => {
+  const handleAddTaskFromSuggestion = (text: string, time: string, category: string) => {
     const minutes = parseTimeToMinutes(time);
-    handleAddTask({ text, time: minutes, completed: false });
+    handleAddTask({ text, time: minutes, completed: false, category: category as Task['category'] });
   };
 
   const handleUpdateActivities = (activities: Activities) => {
@@ -70,9 +70,12 @@ function App() {
   };
 
   const handleAddTimeBlock = (timeBlock: Omit<TimeBlock, 'id'>) => {
+    const task = data.tasks.find(t => t.id === timeBlock.taskId);
+
     const newTimeBlock: TimeBlock = {
       ...timeBlock,
       id: Date.now().toString(),
+      category: task?.category,
     };
 
     setData((prev) => ({

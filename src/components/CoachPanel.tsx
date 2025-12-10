@@ -6,7 +6,7 @@ import { getDefaultActivities } from '../utils/storage';
 interface CoachPanelProps {
   activities: Activities;
   tasks: Task[];
-  onAddTaskFromSuggestion: (text: string, time: string) => void;
+  onAddTaskFromSuggestion: (text: string, time: string, category: string) => void;
   onUpdateActivities: (activities: Activities) => void;
 }
 
@@ -187,6 +187,7 @@ export const CoachPanel: React.FC<CoachPanelProps> = ({
                           handleEditSuggestion(key, oldText, newSuggestion)
                         }
                         onDelete={(text) => handleDeleteSuggestion(key, text)}
+                        category={key}
                       />
                     ))}
                     {isEditMode && (

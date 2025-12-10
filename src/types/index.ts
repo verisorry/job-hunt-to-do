@@ -6,6 +6,7 @@ export interface Task {
   completed: boolean;
   createdAt: string;
   oldDay: boolean;
+  category?: 'applications' | 'portfolio' | 'projects' | 'skills' | 'custom';
 }
 
 export interface Suggestion {
@@ -29,6 +30,7 @@ export interface TimeBlock {
   taskText: string;
   startHour: number;
   endHour: number;
+  category?: 'applications' | 'portfolio' | 'projects' | 'skills' | 'custom';
 }
 
 export interface CoachData {

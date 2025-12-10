@@ -3,6 +3,23 @@ import { Task, TimeBlock } from '../types';
 import { FaCalendarDays } from "react-icons/fa6";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 
+const getCategoryColors = (category?: string) => {
+  switch (category) {
+    case 'applications':
+      return { bg: 'bg-red-500', hover: 'hover:bg-red-600', light: 'bg-red-50' };
+    case 'portfolio':
+      return { bg: 'bg-green-500', hover: 'hover:bg-green-600', light: 'bg-green-50' };
+    case 'projects':
+      return { bg: 'bg-yellow-500', hover: 'hover:bg-yellow-600', light: 'bg-yellow-50' };
+    case 'skills':
+      return { bg: 'bg-blue-500', hover: 'hover:bg-blue-600', light: 'bg-blue-50' };
+    case 'custom':
+      return { bg: 'bg-gray-500', hover: 'hover:bg-gray-600', light: 'bg-gray-50' };
+    default:
+      return { bg: 'bg-gray-500', hover: 'hover:bg-gray-600', light: 'bg-gray-50' };
+  }
+};
+
 
 interface CalendarPanelProps {
   tasks: Task[];
@@ -223,29 +240,32 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
                         inDragRange && selectedTask
                           ? 'bg-green-100'
                           : blocks.length > 0
-                          ? 'bg-blue-50'
+                          ? getCategoryColors(blocks[0]?.category).light
                           : selectedTask
                           ? 'hover:bg-gray-50 cursor-pointer'
                           : 'bg-white'
                       }`}
                     >
-                      {blocks.map(block => (
-                        <div
-                          key={block.id}
-                          className="bg-blue-500 text-white text-xs px-2 py-1 rounded mb-1 flex justify-between items-center group"
-                        >
-                          <span className="truncate flex-1">{block.taskText}</span>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onDeleteTimeBlock(block.id);
-                            }}
-                            className="ml-2 opacity-0 group-hover:opacity-100 hover:text-red-200 transition-opacity"
+                      {blocks.map(block => {
+                        const colors = getCategoryColors(block.category);
+                        return (
+                          <div
+                            key={block.id}
+                            className={`${colors.bg} text-white text-xs px-2 py-1 rounded mb-1 flex justify-between items-center group`}
                           >
-                            ×
-                          </button>
-                        </div>
-                      ))}
+                            <span className="truncate flex-1">{block.taskText}</span>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onDeleteTimeBlock(block.id);
+                              }}
+                              className="ml-2 opacity-0 group-hover:opacity-100 hover:text-red-200 transition-opacity"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

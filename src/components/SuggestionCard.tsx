@@ -4,9 +4,10 @@ import { Suggestion } from '../types';
 interface SuggestionCardProps {
   suggestion: Suggestion;
   isEditMode: boolean;
-  onAddToTasks: (text: string, time: string) => void;
+  onAddToTasks: (text: string, time: string, category: string) => void;
   onEdit: (oldText: string, newSuggestion: Suggestion) => void;
   onDelete: (text: string) => void;
+  category: string;
 }
 
 export const SuggestionCard: React.FC<SuggestionCardProps> = ({
@@ -15,6 +16,7 @@ export const SuggestionCard: React.FC<SuggestionCardProps> = ({
   onAddToTasks,
   onEdit,
   onDelete,
+  category,
 }) => {
   const [editText, setEditText] = useState(suggestion.text);
   // Extract numeric value from time string (e.g., "30 min" -> 30)
@@ -80,7 +82,7 @@ export const SuggestionCard: React.FC<SuggestionCardProps> = ({
   return (
     <div className="relative group">
         <button
-          onClick={() => onAddToTasks(suggestion.text, suggestion.time)}
+          onClick={() => onAddToTasks(suggestion.text, suggestion.time, category)}
           className="w-full flex justify-between align-middle text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <div className="text-xs text-gray-700">{suggestion.text}</div>
