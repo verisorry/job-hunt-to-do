@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Task, TimeBlock } from '../types';
 import { FaCalendarDays } from "react-icons/fa6";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
@@ -24,6 +24,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isAgendaExpanded, setIsAgendaExpanded] = useState(true);
   const [width, setWidth] = useState<number>(window.innerWidth);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   function handleWindowSizeChange() {
       setWidth(window.innerWidth);
@@ -55,17 +56,31 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  // Get current time in Central Time Zone
-  const getCentralTime = () => {
-    const centralTime = new Date(currentTime.toLocaleString('en-US', { timeZone: 'America/Chicago' }));
-    return centralTime;
+  // Auto-scroll to current time on mount and when panel expands
+  useEffect(() => {
+    if (scrollContainerRef.current && isAgendaExpanded) {
+      const currentTimePosition = getCurrentTimePosition();
+      const scrollPosition = currentTimePosition * 48; // 3rem = 48px
+      const containerHeight = scrollContainerRef.current.clientHeight;
+
+      // Center the current time in the viewport
+      scrollContainerRef.current.scrollTo({
+        top: scrollPosition - containerHeight / 2,
+        behavior: 'smooth'
+      });
+    }
+  }, [isAgendaExpanded]);
+
+  // Get current time in user's local timezone
+  const getLocalTime = () => {
+    return currentTime;
   };
 
   // Calculate position of current time indicator (0-24 as decimal)
   const getCurrentTimePosition = () => {
-    const central = getCentralTime();
-    const hours = central.getHours();
-    const minutes = central.getMinutes();
+    const local = getLocalTime();
+    const hours = local.getHours();
+    const minutes = local.getMinutes();
     return hours + (minutes / 60);
   };
 
@@ -185,7 +200,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
           </div>
         )}
 
-        <div className="flex-1 overflow-auto">
+        <div ref={scrollContainerRef} className="flex-1 overflow-auto">
           <div className="relative">
             {hours.map(hour => {
               const blocks = getBlocksForHour(hour);
@@ -248,7 +263,7 @@ export const CalendarPanel: React.FC<CalendarPanelProps> = ({
               <div className="flex items-center">
                 <div className="w-20 flex items-center justify-end pr-2">
                   <div className="bg-red-500 text-white text-xs px-1.5 py-0.5 rounded font-medium shadow-sm">
-                    {getCentralTime().toLocaleTimeString('en-US', {
+                    {getLocalTime().toLocaleTimeString('en-US', {
                       hour: 'numeric',
                       minute: '2-digit',
                       hour12: true
