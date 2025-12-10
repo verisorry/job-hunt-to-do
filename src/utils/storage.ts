@@ -41,9 +41,9 @@ export const getDefaultActivities = (): Activities => ({
     title: 'Skills',
     emoji: FaToolbox,
     suggestions: [
-      { text: 'Do 2 LeetCode Easy problems', time: '30 min' },
-      { text: 'Do 2 LeetCode Medium problems', time: '45 min' },
-      { text: 'Do 2 LeetCode Company-tagged problems', time: '45 min' },
+      { text: 'Do LeetCode/Blind 75 problems', time: '1 hour' },
+      { text: 'Do Grind 75 problems', time: '1 hour' },
+      { text: 'Do LeetCode Company-tagged problems', time: '1 hour' },
       { text: 'Read a chapter from a book', time: '60 min' },
     ],
   },
