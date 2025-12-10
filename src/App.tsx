@@ -54,6 +54,7 @@ function App() {
     setData((prev) => ({
       ...prev,
       tasks: prev.tasks.filter((task) => task.completed || task.oldDay),
+      timeBlocks: [],
     }));
   };
 
